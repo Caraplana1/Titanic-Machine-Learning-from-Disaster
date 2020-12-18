@@ -1,2 +1,2 @@
-# House-Pricing
-Machine learning algorithm to predict the prices of houses
+# Titanic-Machine-Learning-from-Disaster
+Machine learning algorithm to predict if you survived the titanic disaster.
