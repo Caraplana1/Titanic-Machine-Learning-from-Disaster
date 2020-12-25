@@ -1,6 +1,8 @@
 import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
 
 #change the size of the tree and the number of trees in the forrest
 def Set_forrest_size(number_of_trees, size_of_tree):
@@ -29,17 +31,25 @@ X = X.copy(deep=True)
 
 # Transform the sex string into booleans
 X["Sex"]= X["Sex"].replace(["male","female"], [1,0])
-X["Embarked"] = X["Embarked"].replace(["S","C","Q"," "],[1,2,3,0])
+X["Embarked"] = X["Embarked"].replace(["S","C","Q"],[1,2,3])
+
+# Repace the non aviable data with the mean
+X.Age = np.nan_to_num(X.Age, nan=29.7)
+X.Sex = np.nan_to_num(X.Sex,nan=1)
+X.Embarked = np.nan_to_num(X.Embarked)
+X.Pclass = np.nan_to_num(X.Pclass, nan=2)
+
 
 train_X, val_X, train_y, val_y = train_test_split(X, y)
 
+for i in []:
+    # Create and train the model
+    model = Set_forrest_size()
+    model.fit(train_X, train_y)
 
-"""
-for i in [5, 50, 500]:
+    # Predicts
+    prediction = model.predict(val_X)
 
-    titanic_model = Set_forrest_size(i,i)
-    titanic_model.fit(train_X, train_y)
-    predictions = titanic_model.predict(val_X)
+    mae = mean_absolute_error(val_y,prediction)
 
-    pass
-"""
+    print (mae * 100)
