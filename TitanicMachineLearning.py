@@ -62,6 +62,6 @@ model.fit(X, y)
 prediction = model.predict(test_X)
 
 # Create the final data frame to print in the csv.
-final_response = pd.DataFrame({"Passengerld" : titanic_data_test["PassengerId"], "Survived" : prediction})
+final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
 
 final_response.to_csv(r'Data/submission.csv', index=False)
