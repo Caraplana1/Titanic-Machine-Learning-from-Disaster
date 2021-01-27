@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
@@ -11,14 +12,14 @@ titanic_data_test_path = "Data/test.csv"
 
 # Read and drop non aviable data
 titanic_data_train = pd.read_csv (titanic_data_train_path)
-titanic_data_train.dropna(axis=0)
+#  titanic_data_train.dropna(axis=0)
 
 # features to train the model
 features = ["Pclass", "Sex", "Age"]
 
 # Read the test data
 titanic_data_test = pd.read_csv(titanic_data_test_path)
-titanic_data_test.dropna(axis=0)
+#  titanic_data_test.dropna(axis=0)
 
 # Matrixes how keep th data.
 X = titanic_data_train[features]
@@ -51,17 +52,23 @@ test_X.Pclass = np.nan_to_num(test_X.Pclass, nan=2)
 
 
 # Split the train data and the test data
-# train_X, val_X, train_y, val_y = train_test_split(X, y)
+train_X, val_X, train_y, val_y = train_test_split(X, y)
 
 
 # Create and train the model
+"""
 model = RandomForestClassifier(random_state=0)
 model.fit(X, y)
+"""
+model = LogisticRegression(random_state=0)
+model.fit(train_X,train_y)
 
 # Predicts
-prediction = model.predict(test_X)
+prediction = model.predict(val_X)
+
+print(mean_absolute_error(val_y,prediction)*100)
 
 # Create the final data frame to print in the csv.
-final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
+#final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
 
-final_response.to_csv(r'Data/submission.csv', index=False)
+#final_response.to_csv(r'Data/submission.csv', index=False)
