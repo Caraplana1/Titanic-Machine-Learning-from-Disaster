@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
+"""The Model is suffering a high Bias"""
 
 # Datasets paths
 titanic_data_train_path = "Data/train.csv"
@@ -55,20 +56,23 @@ test_X.Pclass = np.nan_to_num(test_X.Pclass, nan=2)
 train_X, val_X, train_y, val_y = train_test_split(X, y)
 
 
-# Create and train the model
-"""
-model = RandomForestClassifier(random_state=0)
-model.fit(X, y)
-"""
+# Create and train the RandomForestClassifier model.
+#  model = RandomForestClassifier(random_state=0)
+#  model.fit(X, y)
+
 model = LogisticRegression(random_state=0)
 model.fit(train_X,train_y)
 
 # Predicts
 prediction = model.predict(val_X)
+predictionTrain = model.predict(train_X)
 
+print("Validation error")
 print(mean_absolute_error(val_y,prediction)*100)
+print("Traint error")
+print(mean_absolute_error(train_y,predictionTrain)*100)
 
 # Create the final data frame to print in the csv.
-#final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
+#  final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
 
 #final_response.to_csv(r'Data/submission.csv', index=False)
