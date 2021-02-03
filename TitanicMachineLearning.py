@@ -57,22 +57,22 @@ train_X, val_X, train_y, val_y = train_test_split(X, y)
 
 
 # Create and train the RandomForestClassifier model.
-#  model = RandomForestClassifier(random_state=0)
-#  model.fit(X, y)
+model = RandomForestClassifier(random_state=0)
+model.fit(X, y)
 
-model = LogisticRegression(random_state=0)
-model.fit(train_X,train_y)
+#  model = LogisticRegression(random_state=0)
+#  model.fit(train_X,train_y)
 
 # Predicts
-prediction = model.predict(val_X)
+prediction = model.predict(test_X)
 predictionTrain = model.predict(train_X)
 
 print("Validation error")
-print(mean_absolute_error(val_y,prediction)*100)
+#  print(mean_absolute_error(val_y,prediction)*100,end="%\n")
 print("Traint error")
-print(mean_absolute_error(train_y,predictionTrain)*100)
+print(mean_absolute_error(train_y,predictionTrain)*100,end="%\n")
 
 # Create the final data frame to print in the csv.
-#  final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
+final_response = pd.DataFrame({"PassengerId" : titanic_data_test["PassengerId"], "Survived" : prediction})
 
-#final_response.to_csv(r'Data/submission.csv', index=False)
+final_response.to_csv(r'Data/submission.csv', index=False)
